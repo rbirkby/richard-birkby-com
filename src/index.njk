@@ -1,0 +1,28 @@
+---
+layout: layouts/base.njk
+title: Home
+---
+<section class="hero">
+  <h1 class="hero__title">Hi, I'm Richard Birkby</h1>
+  <p class="hero__lead">{{ site.description }}</p>
+</section>
+
+<section class="recent-posts">
+  <h2>Recent posts</h2>
+  <ol class="post-list" role="list" reversed>
+    {% set posts = collections.post | reverse %}
+    {% for post in posts | slice(0, 5) %}
+      <li class="post-list__item">
+        <a href="{{ post.url }}" class="post-list__link">
+          <span class="post-list__title">{{ post.data.title }}</span>
+          <time class="post-list__date" datetime="{{ post.date | dateISO }}">{{ post.date | dateDisplay }}</time>
+        </a>
+      </li>
+    {% else %}
+      <li>No posts yet.</li>
+    {% endfor %}
+  </ol>
+  {% if collections.post.length > 5 %}
+    <a href="/blog/" class="link-more">All posts &rarr;</a>
+  {% endif %}
+</section>

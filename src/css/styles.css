@@ -1,0 +1,479 @@
+/* ============================================================
+   Cascade layers — order determines specificity priority
+   ============================================================ */
+@layer reset, base, layout, components, utilities;
+
+/* ============================================================
+   Design tokens
+   ============================================================ */
+:root {
+  /* Colours — light scheme */
+  --color-bg: oklch(99% 0 0);
+  --color-surface: oklch(96% 0.005 250);
+  --color-text: oklch(15% 0.01 250);
+  --color-text-muted: oklch(45% 0.01 250);
+  --color-accent: oklch(55% 0.18 250);
+  --color-accent-hover: oklch(45% 0.18 250);
+  --color-border: oklch(85% 0.01 250);
+  --color-code-bg: oklch(93% 0.005 250);
+
+  /* Typography */
+  --font-sans: system-ui, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", monospace;
+  --font-size-sm: clamp(0.8rem, 0.17vw + 0.76rem, 0.89rem);
+  --font-size-base: clamp(1rem, 0.34vw + 0.91rem, 1.19rem);
+  --font-size-lg: clamp(1.25rem, 0.61vw + 1.1rem, 1.58rem);
+  --font-size-xl: clamp(1.56rem, 1vw + 1.31rem, 2.11rem);
+  --font-size-2xl: clamp(1.95rem, 1.56vw + 1.56rem, 2.81rem);
+  --line-height: 1.65;
+  --line-height-heading: 1.2;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+
+  /* Layout */
+  --content-width: 68ch;
+  --site-padding: clamp(1rem, 4vw, 2rem);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: oklch(12% 0.01 250);
+    --color-surface: oklch(18% 0.01 250);
+    --color-text: oklch(92% 0.005 250);
+    --color-text-muted: oklch(65% 0.01 250);
+    --color-accent: oklch(72% 0.18 250);
+    --color-accent-hover: oklch(82% 0.18 250);
+    --color-border: oklch(30% 0.01 250);
+    --color-code-bg: oklch(20% 0.01 250);
+  }
+}
+
+/* ============================================================
+   Reset
+   ============================================================ */
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  img,
+  video,
+  svg {
+    display: block;
+    max-inline-size: 100%;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  figure,
+  blockquote,
+  dl,
+  dd {
+    margin: 0;
+  }
+
+  ul[role="list"],
+  ol[role="list"] {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+@layer base {
+  html {
+    color-scheme: light dark;
+    scroll-behavior: smooth;
+    font-size: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    min-block-size: 100dvh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: var(--line-height-heading);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: var(--color-accent);
+    transition: color var(--transition-fast);
+
+    &:hover {
+      color: var(--color-accent-hover);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background-color: var(--color-code-bg);
+    padding-block: 0.1em;
+    padding-inline: 0.35em;
+    border-radius: 4px;
+  }
+
+  pre {
+    background-color: var(--color-code-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: var(--space-md);
+    overflow-x: auto;
+
+    & code {
+      background: none;
+      padding: 0;
+      font-size: var(--font-size-sm);
+    }
+  }
+
+  blockquote {
+    border-inline-start: 3px solid var(--color-accent);
+    padding-inline-start: var(--space-lg);
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  hr {
+    border: none;
+    border-block-start: 1px solid var(--color-border);
+    margin-block: var(--space-xl);
+  }
+}
+
+/* ============================================================
+   Layout
+   ============================================================ */
+@layer layout {
+  .site-header {
+    border-block-end: 1px solid var(--color-border);
+    padding-block: var(--space-md);
+    padding-inline: var(--site-padding);
+  }
+
+  main {
+    padding-block: var(--space-xl);
+    padding-inline: var(--site-padding);
+    max-inline-size: calc(var(--content-width) + 2 * var(--site-padding));
+    margin-inline: auto;
+    inline-size: 100%;
+  }
+
+  .site-footer {
+    border-block-start: 1px solid var(--color-border);
+    padding-block: var(--space-lg);
+    padding-inline: var(--site-padding);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    text-align: center;
+  }
+}
+
+/* ============================================================
+   Components
+   ============================================================ */
+@layer components {
+  /* Navigation */
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    max-inline-size: calc(var(--content-width) + 2 * var(--site-padding));
+    margin-inline: auto;
+  }
+
+  .site-nav__home {
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-text);
+    margin-inline-end: auto;
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+
+  .site-nav__links {
+    display: flex;
+    gap: var(--space-lg);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Hero */
+  .hero {
+    margin-block-end: var(--space-xl);
+  }
+
+  .hero__title {
+    font-size: var(--font-size-2xl);
+    margin-block-end: var(--space-sm);
+  }
+
+  .hero__lead {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-muted);
+  }
+
+  /* Post list */
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .post-list--full {
+    gap: var(--space-lg);
+  }
+
+  .post-list__item {
+    display: contents;
+  }
+
+  .post-list--full .post-list__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .post-list__link {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-md);
+    text-decoration: none;
+    padding-block: var(--space-xs);
+
+    &:hover .post-list__title {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+  }
+
+  .post-list__title {
+    color: var(--color-text);
+    font-weight: 500;
+  }
+
+  .post-list__date {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .post-list__description {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    margin: 0;
+  }
+
+  .link-more {
+    display: inline-block;
+    margin-block-start: var(--space-md);
+    font-size: var(--font-size-sm);
+  }
+
+  /* Blog post */
+  .post__header {
+    margin-block-end: var(--space-xl);
+  }
+
+  .post__title {
+    font-size: var(--font-size-2xl);
+    margin-block-end: var(--space-sm);
+  }
+
+  .post__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  .post__description {
+    margin-block-start: var(--space-md);
+    font-size: var(--font-size-lg);
+    color: var(--color-text-muted);
+  }
+
+  .post__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .tag {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding-block: 0.1em;
+    padding-inline: 0.5em;
+    font-size: var(--font-size-sm);
+  }
+
+  /* Prose — rich text body */
+  .prose {
+    container-type: inline-size;
+
+    & > * + * {
+      margin-block-start: var(--space-md);
+    }
+
+    & h2 {
+      font-size: var(--font-size-xl);
+      margin-block-start: var(--space-xl);
+      margin-block-end: var(--space-sm);
+    }
+
+    & h3 {
+      font-size: var(--font-size-lg);
+      margin-block-start: var(--space-lg);
+      margin-block-end: var(--space-sm);
+    }
+
+    & ul,
+    & ol {
+      padding-inline-start: var(--space-lg);
+    }
+
+    & li + li {
+      margin-block-start: var(--space-xs);
+    }
+
+    & blockquote {
+      margin-inline: 0;
+      margin-block: var(--space-lg);
+    }
+
+    & pre {
+      margin-block: var(--space-lg);
+    }
+
+    & a {
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+
+    & img {
+      border-radius: 8px;
+      margin-inline: auto;
+    }
+
+    & figure {
+      margin-inline: 0;
+
+      & figcaption {
+        text-align: center;
+        color: var(--color-text-muted);
+        font-size: var(--font-size-sm);
+        margin-block-start: var(--space-xs);
+      }
+    }
+
+    @container (width > 40ch) {
+      & blockquote {
+        padding-inline-start: var(--space-xl);
+      }
+    }
+  }
+
+  /* Page header */
+  .page-header {
+    margin-block-end: var(--space-xl);
+
+    & h1 {
+      font-size: var(--font-size-2xl);
+    }
+  }
+
+  /* Recent posts section */
+  .recent-posts {
+    & h2 {
+      font-size: var(--font-size-lg);
+      margin-block-end: var(--space-md);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: var(--font-size-sm);
+    }
+  }
+}
+
+/* ============================================================
+   Utilities
+   ============================================================ */
+@layer utilities {
+  .visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    block-size: 1px;
+    inline-size: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+    position: absolute;
+  }
+}
