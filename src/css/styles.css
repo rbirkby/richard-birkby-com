@@ -451,6 +451,22 @@
   }
 
   /* Recent posts section */
+  /* 404 page */
+  .error-page {
+    text-align: center;
+    padding-block: var(--space-xl);
+
+    & h1 {
+      font-size: var(--font-size-2xl);
+      margin-block-end: var(--space-md);
+    }
+
+    & p {
+      color: var(--color-text-muted);
+      margin-block-end: var(--space-lg);
+    }
+  }
+
   .recent-posts {
     & h2 {
       font-size: var(--font-size-lg);
