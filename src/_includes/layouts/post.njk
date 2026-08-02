@@ -21,6 +21,23 @@ layout: layouts/base.njk
     {% endif %}
   </header>
 
+  {% if versionOf %}
+    <aside class="version-notice version-notice--archived" role="note">
+      <p>You are viewing <strong>version {{ version }}</strong> of this post &mdash; this is not the current version. <a href="{{ versionOf }}">Read the current version &rarr;</a></p>
+    </aside>
+  {% else %}
+    {% set olderVersions = collections.postVersions | versionsOf(page.url) %}
+    {% if olderVersions.length %}
+      <aside class="version-notice" role="note">
+        <p>Earlier versions:
+          {% for v in olderVersions %}
+            <a href="{{ v.url }}">v{{ v.data.version }}</a>{% if not loop.last %}, {% endif %}
+          {% endfor %}
+        </p>
+      </aside>
+    {% endif %}
+  {% endif %}
+
   <div class="post__body prose">
     {{ content | safe }}
   </div>

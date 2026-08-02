@@ -10,7 +10,7 @@ eleventyExcludeFromCollections: true
 </header>
 
 <ol class="post-list post-list--full" role="list" reversed>
-  {% set posts = collections.post | reverse %}
+  {% set posts = collections.posts | reverse %}
   {% for post in posts %}
     <li class="post-list__item">
       <a href="{{ post.url }}" class="post-list__link">
