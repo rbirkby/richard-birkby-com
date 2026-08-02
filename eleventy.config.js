@@ -1,5 +1,6 @@
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/css");
+  eleventyConfig.addPassthroughCopy({ "_headers": "_headers" });
 
   eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
 
