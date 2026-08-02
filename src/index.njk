@@ -10,7 +10,7 @@ title: Home
 <section class="recent-posts">
   <h2>Recent posts</h2>
   <ol class="post-list" role="list" reversed>
-    {% set posts = collections.post | reverse %}
+    {% set posts = collections.posts | reverse %}
     {% for post in posts | limit(5) %}
       <li class="post-list__item">
         <a href="{{ post.url }}" class="post-list__link">

@@ -3,6 +3,23 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/img");
   eleventyConfig.addPassthroughCopy({ _headers: "_headers" });
 
+  // Posts excluding historical versions
+  eleventyConfig.addCollection("posts", (api) =>
+    api.getFilteredByTag("post").filter((item) => !item.data.versionOf),
+  );
+
+  // All historical versions across all posts
+  eleventyConfig.addCollection("postVersions", (api) =>
+    api.getAll().filter((item) => item.data.versionOf),
+  );
+
+  // Return versions for a given canonical post URL, sorted oldest first
+  eleventyConfig.addFilter("versionsOf", (versions, url) =>
+    versions
+      .filter((v) => v.data.versionOf === url)
+      .sort((a, b) => a.data.version - b.data.version),
+  );
+
   eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
 
   eleventyConfig.addFilter("limit", (arr, n) => arr.slice(0, n));
