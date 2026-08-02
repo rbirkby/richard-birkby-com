@@ -1,0 +1,25 @@
+---
+layout: layouts/base.njk
+title: Blog
+description: All posts
+---
+<header class="page-header">
+  <h1>Blog</h1>
+</header>
+
+<ol class="post-list post-list--full" role="list" reversed>
+  {% set posts = collections.post | reverse %}
+  {% for post in posts %}
+    <li class="post-list__item">
+      <a href="{{ post.url }}" class="post-list__link">
+        <span class="post-list__title">{{ post.data.title }}</span>
+        <time class="post-list__date" datetime="{{ post.date | dateISO }}">{{ post.date | dateDisplay }}</time>
+      </a>
+      {% if post.data.description %}
+        <p class="post-list__description">{{ post.data.description }}</p>
+      {% endif %}
+    </li>
+  {% else %}
+    <li>No posts yet.</li>
+  {% endfor %}
+</ol>

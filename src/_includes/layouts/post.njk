@@ -1,0 +1,27 @@
+---
+layout: layouts/base.njk
+---
+<article class="post">
+  <header class="post__header">
+    <h1 class="post__title">{{ title }}</h1>
+    <p class="post__meta">
+      <time datetime="{{ date | dateISO }}">{{ date | dateDisplay }}</time>
+      {% if tags %}
+        <span class="post__tags" aria-label="Tags">
+          {% for tag in tags %}
+            {% if tag != "post" %}
+              <span class="tag">{{ tag }}</span>
+            {% endif %}
+          {% endfor %}
+        </span>
+      {% endif %}
+    </p>
+    {% if description %}
+      <p class="post__description">{{ description }}</p>
+    {% endif %}
+  </header>
+
+  <div class="post__body prose">
+    {{ content | safe }}
+  </div>
+</article>
