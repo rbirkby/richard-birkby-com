@@ -87,3 +87,34 @@ Whilst the industry has [advocated](https://images.nvidia.com/pdf/Open-Weights-a
 
 At the same time, the rise of US open-weight models, such as Poolside’s Laguna, is emerging as a counter to China’s open-weight models from Moonshot AI (Kimi), Z.AI (GLM), and DeepSeek.
 
+## Abstraction, model routing and cost efficiency
+
+As we build out the AI ecosystem, new abstractions emerge. The Agent Harness is one such abstraction. These harnesses orchestrate calls to LLMs, provide the LLM with family and model-specific system instructions, co-ordinate fork-join patterns across subagents and manage context, memory and tool calling.
+
+Often, but not exclusively created by the frontier labs, these harnesses undergo similar A/B testing and evals to the models themselves - hill climbing the agent.
+
+These agents are becoming a foundational building block, used as the integration point by other applications similar to how the small number of HTML rendering engines are built into a greater number of web browsers. Expect bundling of a vendor's agent harness across their distribution channels, similar to Safari/iOS, Chrome/Android or IE/Windows. APIs and Standards will form around these agent harnesses. 
+
+Model Routers are an emerging agent harness capability, using local signals to route LLM calls to the best model for the task. In some cases, the calls may be routed to multiple LLMs to invoke a debate, as in the [Omnigent](https://omnigent.ai/docs/use/builtin-agents/debby) meta-harness or Copilot's [Rubber Duck agent](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/rubber-duck) across model families. Model Routers may use cost, latency, capability, locality signals to dispatch LLM requests to cheaper, faster, larger, local models along the pareto frontier as appropriate. The selection process itself may use another specialised AI model such as with Copilot's [Hydra intent classifier](https://arxiv.org/html/2605.17106v2).
+
+Humans instinctively believe that 'bigger is better' and choose the largest model when a smaller more specialised model may be adequate and significantly reduce latency. By moving the model selection decision process out of the human flow, tokenmaxxing - the tendency to attribute high token usage to high employee performance - is eliminated. The per-session token costs will drop leading to more opportunities to use AI in new ways - [Jevon's Paradox](https://en.wikipedia.org/wiki/Jevons_paradox) in action.
+
+
+## Multi-surface
+
+With the abstraction of the agent harness, the opportunity to co-locate that harness via existing deployed distribution is inevitable. "Interface Gravity", or where attention resides in [sovereign posture](https://en.wikipedia.org/wiki/Application_posture) applications is the logical location to increase agent harness consumption.
+
+We will also see Agent Harness Motion, where agentic sessions get transferred from a local agent harness to a remote agent harness and back again. This host-agnostic capability supports longer horizon tasks and an increasing degree of autonomy.
+
+We will also see the end of Agentic Coding Assistants - instead of specialised user interfaces, expect to see the generalisation of agentic harness UIs. Agentic Development Environments (ADEs) will replace IDEs.
+
+## Compute
+
+Training a model is an expensive, high compute activity, which can take many months. However, this is a one-time activity. Inference, or test-time compute, is relatively cheap but frequent.
+
+> $frequency × cost_{inference} ≪ 1 × cost_{training}$
+
+As models and agent harnesses continue to improve and costs reduce, [Jevons Paradox](https://en.wikipedia.org/wiki/Jevons_paradox) results in greater opportunities to use AI, increasing the amount of inference needed.
+
+Therefore, to an approximation, inference has a linear relationship to power consumption. Until an demand ceiling is reached, or an algorithmic breakthrough in AI inference is discovered, the use of AI inference will continue to grow - some speculate the power required will exceed [320 GW by 2030](https://www.rand.org/pubs/research_reports/RRA3572-1.html) when the maximum capacity of the entire continental USA is 1,280GW. Hence the recent interest amongst space companies to develop orbital compute across constellations of Low Earth Orbit (LEO) satellites with large solar arrays, cooling and laser mesh networking. These satellites operate at an altitude of around 500km keeping ground to satellite latencies low (sub-30ms round-trip), 50% higher solar efficiency than ground photo-voltaics and 24/7 sunshine in a dawn/dusk sun-synchronous orbit. With sufficient mass-to-orbit capacity, these orbital clouds can be constructed faster and cheaper than ground-based data centres. They can even be used for pre and post-training with spare capacity through spot compute.
+

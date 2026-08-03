@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
+    "@mdit/plugin-katex": "^1.0.2",
     "oxfmt": "^0.61.0",
     "oxlint": "^1.76.0"
   }
