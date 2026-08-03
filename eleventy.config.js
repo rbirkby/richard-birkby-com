@@ -7,7 +7,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({
     "node_modules/katex/dist/katex.min.css": "css/katex.min.css",
   });
-  eleventyConfig.addPassthroughCopy({ "node_modules/katex/dist/fonts": "fonts" });
+  eleventyConfig.addPassthroughCopy({ "node_modules/katex/dist/fonts": "css/fonts" });
 
   eleventyConfig.amendLibrary("md", (mdLib) => {
     mdLib.use(katex, { delimiters: "all" });
